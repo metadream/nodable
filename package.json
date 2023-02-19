@@ -1,11 +1,11 @@
 {
   "name": "node-cross",
-  "version": "1.0.9",
+  "version": "1.1.1",
   "description": "A tiny but complete http server framework for nodejs.",
   "license": "MIT",
   "author": "Ai Chen",
   "homepage": "https://github.com/metadream",
-  "repository": "https://github.com/metadream/es-modules.git",
+  "repository": "https://github.com/metadream/node-cross.git",
   "main": "index.js",
   "keywords": [
     "micro-server",

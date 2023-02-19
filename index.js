@@ -67,7 +67,7 @@ module.exports = class extends Emitter {
     const server = http.createServer(this.callback());
     return server.listen(port, () => {
       console.log(`\x1b[90m[Cross] Node version: ${process.version}\x1b[0m`);
-      console.log(`\x1b[90m[Cross] Repository: https://github.com/metadream/es-modules\x1b[0m`);
+      console.log(`\x1b[90m[Cross] Repository: https://github.com/metadream/node-cross\x1b[0m`);
       console.log(`[Cross] Server is running at \x1b[4m\x1b[36mhttp://localhost:${port}\x1b[0m`);
     });
   }
