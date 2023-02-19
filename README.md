@@ -1,29 +1,44 @@
-# Node-Cross
+# node-cross
 
-Cross is a tiny but complete http server framework without any external dependencies. Its features include:
+Node-cross is a tiny but complete http server framework for nodejs. The features include:
 
 - [x] Application context
-- [x] Middleware like Koa.js
+- [x] Middlewares like Koa.js
 - [x] Built-in static service
 - [x] Built-in routing service
 - [x] Built-in template engine
 
-### Installation
+## Installation
 ```
 npm i node-cross
 ```
 
-### Get started
+## Get Started
 
 ```js
 const Cross = require("node-cross");
 
 new Cross()
-  .engine({})
   .static("/assets")
-  .on("error", (err, ctx) => {})
-  .use(ctx => {})
-  .get("/", ctx => {})
+  .engine({
+    root: "template",
+    imports: { globalName: "cross" }
+  })
+  .on("error", (err, ctx) => {
+    console.error(err);
+    ctx.body = {
+      status: ctx.status,
+      message: ctx.body
+    };
+  })
+  .use(async (ctx, next) => {
+    ctx.custom = "xxxx";
+    await next();
+  })
+  .get("/", async ctx => {
+    console.log(ctx.query);
+    console.log(ctx.params)
+  })
   .listen();
 ```
 
@@ -31,12 +46,12 @@ new Cross()
 
 ### Methods
 
-- `app.engine(options)` Enable built-in template engine with options `{ strip, root, imports }`.
+- `app.engine(options)` Enable template engine with options `{ root, imports }`.
 - `app.static(path)` Serve static resources with the given `path`.
 - `app.on("error", function)` Custom unified error handling.
 - `app.use(function)` Add a middleware like koa.js.
 - `app.get(path, [tmpl,] function)` Add dynamic route including `post`, `put`, `delete` and other
-standard request methods, it will auto-render template if `tmpl` exists.
+standard request methods, it will auto-render template if `tmpl` parameter exists.
 - `app.listen([port])` Create and start an application server on the specified port.
 - `app.callback()` Return a request handler for node's native http server.
 
@@ -44,7 +59,7 @@ standard request methods, it will auto-render template if `tmpl` exists.
 
 #### Properties
 
-- `ctx.params` Get params in route path
+- `ctx.params` Get params in route path, wildcard supports
 - `ctx.query` Get params in query string
 - `ctx.method` Get request method
 - `ctx.path` Get request path
@@ -56,8 +71,10 @@ standard request methods, it will auto-render template if `tmpl` exists.
 - `ctx.headers` Get headers object
 - `ctx.cookies` Get cookies object
 - `ctx.status` Get response status code
-- `ctx.status=` Set response status code
 - `ctx.body` Get response body
+- `ctx.request` Get native request
+- `ctx.response` Get native response
+- `ctx.status=` Set response status code
 - `ctx.body=` Set response body
 
 #### Methods
@@ -69,24 +86,18 @@ standard request methods, it will auto-render template if `tmpl` exists.
 - `async ctx.text()` Get request body in text
 - `async ctx.buffer()` Get request body in buffer
 - `ctx.redirect(url[, status])` Redirect url with status default 301
-- `ctx.view(path, data)` Render template with a file, only if engine enabled.
-- `ctx.render(path, data)` Render template with a text, only if engine enabled.
+- `ctx.view(path, data)` Render template file, only if engine enabled.
+- `ctx.render(path, data)` Render template text, only if engine enabled.
 - `ctx.throw(message, status)` Throw an error with status code
 
 ### Route Syntax
 
 - `/static` static route
-- `/*` Wildcard route, it will return `wildcard` variable in context.params
+- `/*` Wildcard route, it will return `wildcard` variable in `ctx.params`
 - `/:user`
 - `/:user?`
 - `/:user(\\d+)`
 
 ### Template Syntax
 
-- `{{@ file }}` Include partial file
-- `{{# name }} {{# }}` Define block with name
-- `{{## name }}` Use block with name
-- `{{ evaluate }}`
-- `{{= interpolate }}`
-- `{{? conditional }} {{?? }} {{? }}`
-- `{{~ iterate:value:index }} {{~ }}`
+See https://github.com/metadream/tmplet.js
