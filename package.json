@@ -6,7 +6,7 @@
   "author": "Ai Chen",
   "homepage": "https://github.com/metadream",
   "repository": "https://github.com/metadream/es-modules.git",
-  "main": "app.js",
+  "main": "index.js",
   "keywords": [
     "micro-server",
     "http-server",
