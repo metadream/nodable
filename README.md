@@ -1,4 +1,4 @@
-# Nudes
+# Nedos
 
 A compact, high-performance and full-featured web framework based on nodejs. The
 features include:
@@ -12,13 +12,13 @@ features include:
 ## Installation
 
 ```
-npm i nudes
+npm i nedos
 ```
 
 ## Get Started
 
 ```js
-const app = require("nudes");
+const app = require("nedos");
 
 app
   .static("/assets")

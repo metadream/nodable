@@ -66,9 +66,9 @@ class Server extends Emitter {
     listen(port = 3000) {
         const server = http.createServer(this.callback());
         return server.listen(port, () => {
-            console.log(`\x1b[90m[Nudes] Node version: ${process.version}\x1b[0m`);
-            console.log(`\x1b[90m[Nudes] Repository: https://github.com/metadream/nudes\x1b[0m`);
-            console.log(`[Nudes] Server is running at \x1b[4m\x1b[36mhttp://localhost:${port}\x1b[0m`);
+            console.log(`\x1b[90m[Nedos] Node version: ${process.version}\x1b[0m`);
+            console.log(`\x1b[90m[Nedos] Repository: https://github.com/metadream/nedos\x1b[0m`);
+            console.log(`[Nedos] Server is running at \x1b[4m\x1b[36mhttp://localhost:${port}\x1b[0m`);
         });
     }
 
@@ -153,7 +153,7 @@ class Server extends Emitter {
         if (this.listenerCount("error")) {
             this.emit("error", err, ctx);
         } else {
-            console.error("\x1b[31m[Nudes]", err, "\x1b[0m");
+            console.error("\x1b[31m[Nedos]", err, "\x1b[0m");
         }
     }
 
