@@ -1,20 +1,23 @@
 {
-  "name": "node-cross",
-  "version": "1.1.5",
-  "description": "A tiny but complete http server framework for nodejs.",
+  "name": "nudes",
+  "version": "0.0.1",
+  "description": "A compact, high-performance and full-featured web framework based on nodejs.",
   "license": "MIT",
   "author": "Ai Chen",
   "homepage": "https://github.com/metadream",
-  "repository": "https://github.com/metadream/node-cross.git",
+  "repository": "https://github.com/metadream/nudes.git",
   "main": "index.js",
   "keywords": [
     "micro-server",
     "http-server",
+    "web-server",
+    "http-framework",
+    "web-framework",
     "template-engine",
     "path-router",
     "restful-api"
   ],
   "dependencies": {
-    "tmplet": "^1.0.5"
+    "tmplet": "^1.0.7"
   }
 }

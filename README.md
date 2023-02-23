@@ -1,6 +1,7 @@
-# node-cross
+# Nudes
 
-Node-cross is a tiny but complete http server framework for nodejs. The features include:
+A compact, high-performance and full-featured web framework based on nodejs. The
+features include:
 
 - [x] Application context
 - [x] Middlewares like Koa.js
@@ -9,35 +10,36 @@ Node-cross is a tiny but complete http server framework for nodejs. The features
 - [x] Built-in template engine
 
 ## Installation
+
 ```
-npm i node-cross
+npm i nudes
 ```
 
 ## Get Started
 
 ```js
-const Cross = require("node-cross");
+const app = require("nudes");
 
-new Cross()
+app
   .static("/assets")
   .engine({
     root: "template",
-    imports: { globalName: "cross" }
+    imports: { globalName: "" },
   })
   .on("error", (err, ctx) => {
     console.error(err);
     ctx.body = {
       status: ctx.status,
-      message: ctx.body
+      message: ctx.body,
     };
   })
   .use(async (ctx, next) => {
     ctx.custom = "xxxx";
     await next();
   })
-  .get("/", async ctx => {
+  .get("/", async (ctx) => {
     console.log(ctx.query);
-    console.log(ctx.params)
+    console.log(ctx.params);
   })
   .listen();
 ```
@@ -50,9 +52,11 @@ new Cross()
 - `app.static(path)` Serve static resources with the given `path`.
 - `app.on("error", function)` Custom unified error handling.
 - `app.use(function)` Add a middleware like koa.js.
-- `app.get(path, [tmpl,] function)` Add dynamic route including `post`, `put`, `delete` and other
-standard request methods, it will auto-render template if `tmpl` parameter exists.
-- `app.listen([port])` Create and start an application server on the specified port.
+- `app.get(path, [tmpl,] function)` Add dynamic route including `post`, `put`,
+  `delete` and other standard request methods, it will auto-render template if
+  `tmpl` parameter exists.
+- `app.listen([port])` Create and start an application server on the specified
+  port.
 - `app.callback()` Return a request handler for node's native http server.
 
 ### Context
@@ -100,4 +104,4 @@ standard request methods, it will auto-render template if `tmpl` parameter exist
 
 ### Template Syntax
 
-See https://github.com/metadream/tmplet.js
+See https://github.com/metadream/tmplet
