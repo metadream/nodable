@@ -1,6 +1,6 @@
 {
   "name": "nedos",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A compact, high-performance and full-featured web framework based on nodejs.",
   "license": "MIT",
   "author": "Ai Chen",

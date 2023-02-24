@@ -21,7 +21,7 @@ npm i nedos
 const app = require("nedos");
 
 app
-  .static("/assets")
+  .serve("/assets/*")
   .engine({
     root: "template",
     imports: { globalName: "" },
@@ -48,8 +48,9 @@ app
 
 ### Methods
 
+- `app.serve(path)` Serve static resources with the given `path`. It's the
+  syntactic sugar for `get` routing, so the `path` must starts with "/".
 - `app.engine(options)` Enable template engine with options `{ root, imports }`.
-- `app.static(path)` Serve static resources with the given `path`.
 - `app.on("error", function)` Custom unified error handling.
 - `app.use(function)` Add a middleware like koa.js.
 - `app.get(path, [tmpl,] function)` Add dynamic route including `post`, `put`,
