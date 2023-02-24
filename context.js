@@ -116,7 +116,7 @@ module.exports = class Context {
     // Get all cookies
     get cookies() {
         const cookies = {};
-        let cookie = this.get("cookie");
+        const cookie = this.get("cookie");
         if (cookie) {
             cookie.split(/;\s+/).forEach(c => {
                 const i = c.indexOf("=");

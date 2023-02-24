@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { join, resolve, extname } = require("path");
+const { resolve, extname } = require("path");
 const tmplet = require("tmplet");
 
 /**
@@ -25,44 +25,36 @@ exports.lookup = (router) => {
 
 /**
  * Serve static resources
- * @param {string} root
  * @returns
  */
-exports.static = (root) => {
-    return async (ctx, next) => {
-        // Removes the leading slash and converts absolute path to relative path
-        root = join(root, "/").replace(/^\/+/, "");
-        const path = ctx.path.replace(/^\/+/, "");
-        if (!path.startsWith(root)) return await next();
+exports.static = ctx => {
+    const file = resolve(ctx.path.replace(/^\/+/, ""));
+    if (!fs.existsSync(file)) {
+        ctx.throw("Resource not found: " + ctx.path, 404);
+    }
+    const stat = fs.statSync(file);
+    if (stat.isDirectory()) {
+        ctx.throw("Resource not found: " + ctx.path, 406); // NOT_ACCEPTABLE
+    }
+    const mime = MIME[extname(file)];
+    if (mime) {
+        ctx.set("Content-Type", mime);
+    }
 
-        const file = resolve(path);
-        if (!fs.existsSync(file)) {
-            ctx.throw("Resource not found: " + ctx.path, 404);
-        }
-        const stat = fs.statSync(file);
-        if (stat.isDirectory()) {
-            ctx.throw("Resource not found: " + ctx.path, 406); // NOT_ACCEPTABLE
-        }
-        const mime = MIME[extname(file)];
-        if (mime) {
-            ctx.set("Content-Type", mime);
-        }
+    // Handling 304 status with negotiation cache
+    // : if-modified-since / Last-Modified
+    if (stat.mtime) {
+        const lastModified = stat.mtime instanceof Date
+            ? stat.mtime.toUTCString() : new Date(stat.mtime).toUTCString();
 
-        // Handling 304 status with negotiation cache
-        // : if-modified-since / Last-Modified
-        if (stat.mtime) {
-            const lastModified = stat.mtime instanceof Date
-                ? stat.mtime.toUTCString() : new Date(stat.mtime).toUTCString();
-
-            if (ctx.get("if-modified-since") == lastModified) {
-                ctx.status = 304;
-            } else {
-                ctx.set("Last-Modified", lastModified);
-                ctx.body = fs.readFileSync(file);
-            }
+        if (ctx.get("if-modified-since") == lastModified) {
+            ctx.status = 304;
         } else {
-            ctx.body = fs.readFileSync(file);
+            ctx.set("Last-Modified", lastModified);
+            return fs.readFileSync(file);
         }
+    } else {
+        return fs.readFileSync(file);
     }
 }
 

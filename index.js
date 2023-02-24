@@ -43,11 +43,11 @@ class Server extends Emitter {
     }
 
     /**
-     * Shortcut for using static middleware
-     * @param {string} root
+     * Shortcut for handle static resources
+     * @param {string} path
      */
-    static(root) {
-        return this.use(middleware.static(root));
+    serve(path) {
+        return this.get(path, middleware.static);
     }
 
     /**
