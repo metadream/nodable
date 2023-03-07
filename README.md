@@ -1,4 +1,4 @@
-# Nedos
+# Nodable
 
 A compact, high-performance and full-featured web framework based on nodejs. The
 features include:
@@ -12,13 +12,13 @@ features include:
 ## Installation
 
 ```
-npm i nedos
+npm i nodable
 ```
 
 ## Get Started
 
 ```js
-const app = require("nedos");
+const app = require("nodable");
 
 app
   .serve("/assets/*")

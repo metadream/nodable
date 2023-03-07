@@ -1,11 +1,11 @@
 {
-  "name": "nedos",
-  "version": "0.0.2",
+  "name": "nodable",
+  "version": "0.0.1",
   "description": "A compact, high-performance and full-featured web framework based on nodejs.",
   "license": "MIT",
   "author": "Ai Chen",
   "homepage": "https://github.com/metadream",
-  "repository": "https://github.com/metadream/nedos.git",
+  "repository": "https://github.com/metadream/nodable.git",
   "main": "index.js",
   "keywords": [
     "micro-server",
