@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { resolve, extname } = require("path");
-const tmplet = require("tmplet");
+const engine = require("engine");
 
 /**
  * Router middleware
@@ -64,12 +64,12 @@ exports.static = ctx => {
  * @returns
  */
 exports.engine = (options) => {
-    tmplet.init(options);
+    engine.init(options);
     return async (ctx, next) => {
-        ctx.render = tmplet.render.bind(tmplet);
+        ctx.render = engine.render.bind(engine);
         ctx.view = (tmpl, data) => {
             ctx.set("Content-Type", "text/html; charset=utf-8");
-            return tmplet.view(tmpl, data);
+            return engine.view(tmpl, data);
         };
         await next();
     }

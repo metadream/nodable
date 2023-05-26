@@ -105,4 +105,51 @@ app
 
 ### Template Syntax
 
-See https://github.com/metadream/tmplet
+- `{{ }}` Evaluate code snippet in javascript. Note that the variables do not
+  need to be declared. ex. `{{ result = 60*60; }}`
+
+- `{{= }}` Interpolation. ex. `{{= username }}`
+
+- `{{? }} {{?? }} {{? }}` Conditional statement. ex.
+
+```
+{{? gender == 0 }}
+  <div>Female</div>
+{{?? gender == 1 }}
+  <div>Male</div>
+{{?? }}
+  <div>Unknown</div>
+{{? }}
+```
+
+- `{{~ }} {{~ }}` Iterative statement. ex.
+
+```
+<ul>
+{{~ users:user:index }}
+  <li>{{= index+1 }} - {{= user.name }}<li>
+{{~ }}
+</ul>
+```
+
+- `{{> }}` Block placeholder.
+- `{{< }}` Block content definition.
+
+```
+{{> content }}
+
+{{< content }}
+  <h1>Hello.</h1>
+{{< }}
+```
+
+- `{{@ }}` Partial including in layout mode. You must be rendered by
+  `view(file, data)` method.
+
+```
+// index.html
+{{@ header.html }}
+
+// header.html
+<h1>Hello.</h1>
+```
