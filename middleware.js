@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { resolve, extname } = require("path");
-const engine = require("engine");
+const engine = require("./engine.js");
 
 /**
  * Router middleware
